@@ -1,4 +1,3 @@
-```markdown
 # Lis-moi 📚
 
 Bienvenue dans Lis-moi, une application mobile hybride conçue pour vous permettre de lire et d’organiser vos livres numériques facilement et avec style ! 🚀
@@ -47,6 +46,3 @@ Construite avec Ionic et Angular, cette application vous offre une expérience f
 - **Lecture intégrée** : pas besoin de basculer entre différentes applications.
 - **Organisation intelligente** : trouvez vos livres rapidement grâce aux catégories et aux favoris.
 - **Open source** : apprenez, contribuez ou personnalisez l’application à votre guise.
-
----
-```
