@@ -1,17 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="max-w-4xl mx-auto p-6">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <!-- En-tête du profil -->
+      <div class="bg-gradient-to-r from-purple-500 to-pink-500 p-6 text-white">
+        <div class="flex items-center space-x-4">
+          <div class="w-24 h-24 rounded-full bg-white p-1">
+            <img
+              src="assets/avatar-placeholder.jpg"
+              class="w-full h-full rounded-full object-cover"
+              alt="Profile"
+            />
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold">John Doe</h1>
+            <p class="text-purple-100">Membre depuis janvier 2024</p>
+          </div>
+        </div>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <!-- Statistiques -->
+      <div class="grid grid-cols-3 gap-4 p-6 bg-gray-50">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">12</div>
+          <div class="text-sm text-gray-600">Livres lus</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">5</div>
+          <div class="text-sm text-gray-600">En cours</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">8</div>
+          <div class="text-sm text-gray-600">Favoris</div>
+        </div>
+      </div>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+      <!-- Paramètres -->
+    </div>
+  </div>
 </ion-content>
