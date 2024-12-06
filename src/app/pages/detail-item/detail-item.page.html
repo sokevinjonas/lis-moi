@@ -1,0 +1,93 @@
+<ion-header class="bg-white">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="tabs/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-lg font-semibold">Détail du livre</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="relative h-72">
+    <img src="https://placehold.co/200x400" class="w-full h-72 object-cover" />
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
+    ></div>
+  </div>
+
+  <div class="px-4 -mt-16 relative z-10">
+    <div class="bg-white rounded-t-3xl p-6 shadow-lg">
+      <!-- En-tête avec titre et bouton favoris -->
+      <div class="flex justify-between items-start mb-4">
+        <h1 class="text-2xl font-bold text-gray-900">L'Alchimiste</h1>
+        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+          <ion-icon name="heart" class="text-red-500" size="large"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Auteur -->
+      <div class="mb-6">
+        <h2 class="text-lg font-semibold text-gray-900">Paulo Coelho</h2>
+        <p class="text-sm text-gray-500">{{ '12/12/2023' | date:'yyyy' }}</p>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2">À propos du livre</h3>
+        <p class="text-gray-700 leading-relaxed">
+          L'Alchimiste raconte l'histoire de Santiago, un jeune berger andalou
+          qui part à la recherche d'un trésor enfoui au pied des Pyramides. Dans
+          le désert, initié par l'alchimiste, il apprendra à écouter son cœur, à
+          lire les signes du destin et, par-dessus tout, à aller au bout de son
+          rêve.
+        </p>
+      </div>
+
+      <!-- Biographie de l'auteur si disponible -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-2">À propos de l'auteur</h3>
+        <div class="flex items-start space-x-4">
+          <img
+            src="https://avatar.iran.liara.run/public/35"
+            class="w-16 h-16 rounded-full object-cover"
+            alt="Photo de l'auteur"
+          />
+          <p class="text-gray-700 leading-relaxed">
+            Paulo Coelho est un romancier et un interprète brésilien. Il est né
+            en 1947 à Rio de Janeiro. Il est l'auteur de nombreux best-sellers
+            internationaux, dont L'Alchimiste, vendu à plus de 150 millions
+            d'exemplaires dans le monde.
+          </p>
+        </div>
+      </div>
+
+      <!-- Informations supplémentaires -->
+      <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-gray-200">
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Pages</p>
+          <p class="font-semibold">12</p>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Langue</p>
+          <p class="font-semibold">Francais</p>
+        </div>
+        <div class="text-center">
+          <p class="text-sm text-gray-500">Catégorie</p>
+          <p class="font-semibold">Roman philosophique</p>
+        </div>
+      </div>
+
+      <!-- Boutons d'action -->
+      <div class="flex space-x-4">
+        <ion-button expand="block" class="flex-1">
+          <ion-icon name="book-outline" slot="start"></ion-icon>
+          Lire
+        </ion-button>
+        <ion-button expand="block" color="light" class="flex-1">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          Télécharger
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

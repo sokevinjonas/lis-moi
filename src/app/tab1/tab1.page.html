@@ -1,9 +1,121 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title> Tab 1 </ion-title>
+    <ion-title>Lis-moi</ion-title>
   </ion-toolbar>
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="filterBooks()"
+    placeholder="Rechercher un livre..."
+  ></ion-searchbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <h1 class="text-3xl bg-orange-500 font-bold underline">Hello world!</h1>
+<ion-content>
+  <!-- Section Catégories -->
+  <section class="p-4">
+    <h2 class="text-lg font-semibold mb-4">Catégories</h2>
+    <swiper-container
+      [slidesPerView]="3.5"
+      [spaceBetween]="10"
+      [freeMode]="true"
+    >
+      <swiper-slide *ngFor="let category of categories">
+        <div
+          class="bg-white rounded-lg shadow p-3 cursor-pointer hover:bg-primary/5 transition-colors"
+        >
+          <div class="flex flex-col items-center">
+            <ion-icon
+              name="book-outline"
+              class="text-2xl text-primary mb-2"
+            ></ion-icon>
+            <span class="text-sm font-medium text-center">{{ category }}</span>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </section>
+
+  <!-- Section des plus lus -->
+  <section class="p-4">
+    <h2 class="text-lg font-semibold mb-4">Les plus lus ce mois-ci</h2>
+    <swiper-container
+      [slidesPerView]="2"
+      [spaceBetween]="10"
+      [loop]="true"
+      [freeMode]="true"
+    >
+      <swiper-slide *ngFor="let book of mostReadBooks">
+        <div class="w-40 mx-2">
+          <img
+            [src]="book.coverUrl"
+            class="w-full h-56 object-cover rounded-lg shadow-md"
+          />
+          <p class="text-sm font-medium mt-2">{{ book.title }}</p>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </section>
+
+  <!-- Section des livres par catégories -->
+  <section class="p-4" *ngFor="let category of categories">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">{{ category }}</h2>
+      <button
+        class="text-primary text-sm font-medium flex items-center space-x-1"
+        (click)="showAllBooks(category)"
+      >
+        Voir plus
+        <ion-icon name="arrow-forward-outline" class="ml-1"></ion-icon>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div
+        *ngFor="let book of getBooksByCategory(category).slice(0, 4)"
+        class="bg-white rounded-lg shadow-md overflow-hidden"
+      >
+        <div class="relative">
+          <img
+            [routerLink]="['/detail-item']"
+            routerLinkActive="router-link-active"
+            [src]="book.coverUrl"
+            class="w-full h-48 object-cover"
+          />
+          <button
+            (click)="toggleFavorite(book)"
+            class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg"
+          >
+            <ion-icon
+              [name]="book.isFavorite ? 'star' : 'star-outline'"
+              [class]="book.isFavorite ? 'text-yellow-400' : 'text-gray-400'"
+              size="small"
+            >
+            </ion-icon>
+          </button>
+        </div>
+        <div class="p-4">
+          <h3 class="font-medium text-sm mb-1">{{ book.title }}</h3>
+          <p class="text-gray-500 text-xs mb-2 line-clamp-2">
+            {{ book.description }}
+          </p>
+          <div *ngIf="book.progress !== undefined" class="mb-3">
+            <div class="w-full bg-gray-200 rounded-full h-1.5">
+              <div
+                class="bg-primary h-1.5 rounded-full"
+                [style.width]="book.progress + '%'"
+              ></div>
+            </div>
+            <span class="text-xs text-gray-500">{{ book.progress }}%</span>
+          </div>
+          <ion-button
+            expand="block"
+            size="small"
+            (click)="readBook(book)"
+            class="mt-2"
+          >
+            Lire
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </section>
 </ion-content>
