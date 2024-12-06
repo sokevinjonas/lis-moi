@@ -1,0 +1,7 @@
+{
+  "name": "lis-moi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
