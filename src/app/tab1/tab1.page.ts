@@ -53,8 +53,7 @@ export class Tab1Page {
         category: categories[Math.floor(Math.random() * categories.length)],
         description: `Une courte description du livre ${i}...`,
         coverUrl: `https://placehold.co/200x400`,
-        progress:
-          Math.random() > 0.5 ? Math.floor(Math.random() * 100) : undefined,
+        progress: Math.random() > 0.5 ? Math.floor(Math.random() * 100) : 100,
         isFavorite: Math.random() > 0.8,
         readCount: Math.floor(Math.random() * 1000),
       });

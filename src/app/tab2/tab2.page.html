@@ -6,22 +6,6 @@
 
 <ion-content>
   <div class="p-4">
-    <!-- En-tête avec statistiques -->
-    <div class="bg-primary/10 rounded-xl p-4 mb-6">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="text-center">
-          <p class="text-2xl font-bold text-primary">
-            {{ favoriteBooks.length }}
-          </p>
-          <p class="text-sm text-gray-600">Livres favoris</p>
-        </div>
-        <div class="text-center">
-          <p class="text-2xl font-bold text-primary">{{ getTotalPages() }}</p>
-          <p class="text-sm text-gray-600">Pages lues</p>
-        </div>
-      </div>
-    </div>
-
     <!-- Liste des favoris -->
     <div *ngIf="favoriteBooks.length > 0" class="space-y-4">
       <div

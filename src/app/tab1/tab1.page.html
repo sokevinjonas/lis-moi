@@ -13,11 +13,7 @@
   <!-- Section Catégories -->
   <section class="p-4">
     <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-    <swiper-container
-      [slidesPerView]="3.5"
-      [spaceBetween]="10"
-      [freeMode]="true"
-    >
+    <swiper-container [slidesPerView]="3.5" [spaceBetween]="10">
       <swiper-slide *ngFor="let category of categories">
         <div
           class="bg-white rounded-lg shadow p-3 cursor-pointer hover:bg-primary/5 transition-colors"
