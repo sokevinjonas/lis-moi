@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Books } from '../../interfaces/books';
 import { Category } from '../../interfaces/category';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +22,22 @@ export class GlobalService {
       },
     });
   }
+  async loadItemBook(param: number): Promise<Books> {
+    return this.apiService
+      .getItemBook(param)
+      .toPromise()
+      .then(
+        (response) => {
+          console.log('Item:', response.data);
+          return response.data[0]; // Retourne les données
+        },
+        (error) => {
+          console.error('Erreur lors du chargement du livre:', error);
+          throw error; // Laisse l'erreur être gérée par l'appelant
+        }
+      );
+  }
+
   loadBooks() {
     this.apiService.getDataBooks().subscribe({
       next: (data) => {

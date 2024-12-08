@@ -7,14 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { ReaderPageRoutingModule } from './reader-routing.module';
 
 import { ReaderPage } from './reader.page';
-
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ReaderPageRoutingModule
-  ],
-  declarations: [ReaderPage]
+  imports: [CommonModule, FormsModule, IonicModule, ReaderPageRoutingModule],
+  declarations: [ReaderPage],
 })
 export class ReaderPageModule {}

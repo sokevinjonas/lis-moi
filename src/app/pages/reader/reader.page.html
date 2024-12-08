@@ -1,13 +1,16 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>reader</ion-title>
+    <ion-title>Lecture du livre</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">reader</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div>
+    <!-- Affichage du PDF avec ngx-extended-pdf-viewer -->
+    <!-- <ngx-extended-pdf-viewer
+      [src]="bookUrl"
+      useBrowserLocale="true"
+      height="100%"
+    /> -->
+  </div>
 </ion-content>

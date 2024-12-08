@@ -35,15 +35,4 @@ export class Tab1Page {
     // book.isFavorite = !book.isFavorite;
     // this.saveToLocalStorage();
   }
-
-  readBook(book: Books) {
-    // À implémenter : redirection vers la visionneuse PDF
-    // Vérifie si le livre a une URL valide (PDF ou EPUB)
-    if (book.url) {
-      // Redirige vers la page de lecture en passant l'URL du livre
-      this.router.navigate(['/reader'], {
-        queryParams: { bookUrl: book.url },
-      });
-    }
-  }
 }

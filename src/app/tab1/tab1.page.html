@@ -112,7 +112,7 @@
           <ion-button
             expand="block"
             size="small"
-            (click)="readBook(book)"
+            [routerLink]="['/reader', book.id]"
             class="mt-2"
           >
             Lire
