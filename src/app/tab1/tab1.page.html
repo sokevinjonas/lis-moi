@@ -4,7 +4,6 @@
   </ion-toolbar>
   <ion-searchbar
     [(ngModel)]="searchTerm"
-    (ionChange)="filterBooks()"
     placeholder="Rechercher un livre..."
   ></ion-searchbar>
 </ion-header>
@@ -13,8 +12,8 @@
   <!-- Section Catégories -->
   <section class="p-4">
     <h2 class="text-lg font-semibold mb-4">Catégories</h2>
-    <swiper-container [slidesPerView]="3.5" [spaceBetween]="10">
-      <swiper-slide *ngFor="let category of categories">
+    <swiper-container [slidesPerView]="3" [spaceBetween]="10">
+      <swiper-slide *ngFor="let category of globalService.categories">
         <div
           class="bg-white rounded-lg shadow p-3 cursor-pointer hover:bg-primary/5 transition-colors"
         >
@@ -23,7 +22,9 @@
               name="book-outline"
               class="text-2xl text-primary mb-2"
             ></ion-icon>
-            <span class="text-sm font-medium text-center">{{ category }}</span>
+            <span class="text-sm font-medium text-center"
+              >{{ category.name }}</span
+            >
           </div>
         </div>
       </swiper-slide>
@@ -39,10 +40,10 @@
       [loop]="true"
       [freeMode]="true"
     >
-      <swiper-slide *ngFor="let book of mostReadBooks">
+      <swiper-slide *ngFor="let book of globalService.books">
         <div class="w-40 mx-2">
           <img
-            [src]="book.coverUrl"
+            [src]="book.coverImage"
             class="w-full h-56 object-cover rounded-lg shadow-md"
           />
           <p class="text-sm font-medium mt-2">{{ book.title }}</p>
@@ -52,39 +53,40 @@
   </section>
 
   <!-- Section des livres par catégories -->
-  <section class="p-4" *ngFor="let category of categories">
+  <section class="p-4" *ngFor="let category of globalService.categories">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-semibold">{{ category }}</h2>
+      <h2 class="text-lg font-semibold">{{ category.name }}</h2>
       <button
         class="text-primary text-sm font-medium flex items-center space-x-1"
-        (click)="showAllBooks(category)"
+        (click)="showAllBooks(category.name)"
       >
         Voir plus
         <ion-icon name="arrow-forward-outline" class="ml-1"></ion-icon>
       </button>
     </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <div
-        *ngFor="let book of getBooksByCategory(category).slice(0, 4)"
+    <swiper-container [slidesPerView]="2" [spaceBetween]="10">
+      <!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> -->
+      <swiper-slide
+        *ngFor="let book of getBooksByCategory(category)"
         class="bg-white rounded-lg shadow-md overflow-hidden"
-      >
-        <div class="relative">
+        ><div class="relative">
           <img
             [routerLink]="['/detail-item']"
             routerLinkActive="router-link-active"
-            [src]="book.coverUrl"
+            [src]="book.coverImage"
             class="w-full h-48 object-cover"
           />
           <button
             (click)="toggleFavorite(book)"
             class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg"
           >
-            <ion-icon
-              [name]="book.isFavorite ? 'star' : 'star-outline'"
-              [class]="book.isFavorite ? 'text-yellow-400' : 'text-gray-400'"
-              size="small"
-            >
+            <!-- <ion-icon
+            [name]="book.isFavorite ? 'star' : 'star-outline'"
+            [class]="book.isFavorite ? 'text-yellow-400' : 'text-gray-400'"
+            size="small"
+          >
+          </ion-icon> -->
+            <ion-icon name="star" class="text-yellow-400" size="small">
             </ion-icon>
           </button>
         </div>
@@ -93,14 +95,20 @@
           <p class="text-gray-500 text-xs mb-2 line-clamp-2">
             {{ book.description }}
           </p>
-          <div *ngIf="book.progress !== undefined" class="mb-3">
+          <!-- <div *ngIf="book.progress !== undefined" class="mb-3">
+          <div class="w-full bg-gray-200 rounded-full h-1.5">
+            <div
+              class="bg-primary h-1.5 rounded-full"
+              [style.width]="book.progress + '%'"
+            ></div>
+          </div>
+          <span class="text-xs text-gray-500">{{ book.progress }}%</span>
+        </div> -->
+          <div class="mb-3">
             <div class="w-full bg-gray-200 rounded-full h-1.5">
-              <div
-                class="bg-primary h-1.5 rounded-full"
-                [style.width]="book.progress + '%'"
-              ></div>
+              <div class="bg-primary h-1.5 rounded-full" width="10"></div>
             </div>
-            <span class="text-xs text-gray-500">{{ book.progress }}%</span>
+            <span class="text-xs text-gray-500">10%</span>
           </div>
           <ion-button
             expand="block"
@@ -111,7 +119,8 @@
             Lire
           </ion-button>
         </div>
-      </div>
-    </div>
+      </swiper-slide>
+      <!-- </div> -->
+    </swiper-container>
   </section>
 </ion-content>
