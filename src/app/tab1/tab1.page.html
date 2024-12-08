@@ -37,8 +37,7 @@
     <swiper-container
       [slidesPerView]="2"
       [spaceBetween]="10"
-      [loop]="true"
-      [freeMode]="true"
+      autoplay-delay="2500"
     >
       <swiper-slide *ngFor="let book of globalService.books">
         <div class="w-40 mx-2">
