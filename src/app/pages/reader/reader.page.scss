@@ -1,0 +1,56 @@
+:host {
+  ion-header {
+    ion-toolbar {
+      --background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+  }
+}
+
+.pdf-container {
+  height: 100%;
+  background: var(--ion-color-light);
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  ion-spinner {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: var(--ion-color-medium);
+  }
+}
+
+.progress-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  z-index: 1000;
+
+  span {
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+
+  ion-progress-bar {
+    width: 100px;
+    --progress-background: var(--ion-color-primary);
+  }
+}

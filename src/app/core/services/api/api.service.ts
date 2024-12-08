@@ -21,6 +21,7 @@ export class ApiService {
   getItemBook(params: number): Observable<any> {
     return this.http.get<any>(`${this.api}books/${params}`);
   }
+
   getDataCategories(): Observable<any> {
     return this.http.get<any>(`${this.api}categories`);
   }

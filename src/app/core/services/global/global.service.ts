@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Books } from '../../interfaces/books';
 import { Category } from '../../interfaces/category';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
   books: Books[] = [];
+  book: Books[] = [];
   categories: Category[] = [];
   constructor(private apiService: ApiService) {}
 
@@ -22,20 +24,10 @@ export class GlobalService {
       },
     });
   }
-  async loadItemBook(param: number): Promise<Books> {
+  loadItemBook(param: number): Observable<any> {
     return this.apiService
       .getItemBook(param)
-      .toPromise()
-      .then(
-        (response) => {
-          console.log('Item:', response.data);
-          return response.data[0]; // Retourne les données
-        },
-        (error) => {
-          console.error('Erreur lors du chargement du livre:', error);
-          throw error; // Laisse l'erreur être gérée par l'appelant
-        }
-      );
+      .pipe(tap((data) => console.log('Détail du livre:', data.data)));
   }
 
   loadBooks() {

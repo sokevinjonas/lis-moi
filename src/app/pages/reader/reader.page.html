@@ -1,16 +1,62 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Lecture du livre</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="light">
+    <!-- Bouton retour -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Titre du livre -->
+    <ion-title *ngIf="book">{{ book.title }}</ion-title>
+
+    <!-- Boutons d'actions -->
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleBookmark()">
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="shareBook()">
+        <ion-icon name="share-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div>
-    <!-- Affichage du PDF avec ngx-extended-pdf-viewer -->
-    <!-- <ngx-extended-pdf-viewer
-      [src]="bookUrl"
-      useBrowserLocale="true"
-      height="100%"
-    /> -->
+  <ng-container *ngIf="book; else loading">
+    <div class="pdf-container">
+      <ngx-extended-pdf-viewer
+        [src]="book.url"
+        [height]="'100vh'"
+        [useBrowserLocale]="true"
+        [showToolbar]="true"
+        [showSidebarButton]="true"
+        [showFindButton]="true"
+        [showPagingButtons]="true"
+        [textLayer]="true"
+        [showZoomButtons]="true"
+        [showPresentationModeButton]="true"
+        [showDownloadButton]="false"
+        [showPrintButton]="false"
+        [showBookmarkButton]="true"
+        [theme]="'dark'"
+        [language]="'fr'"
+        (pdfLoaded)="onPdfLoaded($event)"
+        (pageChange)="onPageChange($event)"
+      >
+      </ngx-extended-pdf-viewer>
+    </div>
+  </ng-container>
+
+  <!-- Template de chargement -->
+  <ng-template #loading>
+    <div class="loading-container">
+      <ion-spinner name="circles"></ion-spinner>
+      <p>Chargement du document...</p>
+    </div>
+  </ng-template>
+
+  <!-- Menu flottant de progression -->
+  <div class="progress-indicator" *ngIf="currentPage">
+    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <ion-progress-bar [value]="progressValue"></ion-progress-bar>
   </div>
 </ion-content>
