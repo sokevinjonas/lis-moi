@@ -9,6 +9,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="chevron-down-circle-outline"
+      refreshingSpinner="circles"
+      refreshingText="Rechargement..."
+    >
+    </ion-refresher-content>
+  </ion-refresher>
   <!-- Section Catégories -->
   <section class="p-4">
     <h2 class="text-lg font-semibold mb-4">Catégories</h2>

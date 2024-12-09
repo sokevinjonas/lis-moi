@@ -31,6 +31,12 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     this.setInitialPage();
   }
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      this.setInitialPage();
+      event.target.complete();
+    }, 2000);
+  }
 
   setInitialPage() {
     this.globalService.loadCategories();
