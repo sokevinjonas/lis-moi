@@ -56,7 +56,10 @@
 
   <!-- Menu flottant de progression -->
   <div class="progress-indicator" *ngIf="currentPage">
-    <span>{{ currentPage }} / {{ totalPages }}</span>
+    <span
+      >{{ currentPage }} / {{ totalPages }} ({{ (progressValue * 100) |
+      number:'1.0-0' }}%)</span
+    >
     <ion-progress-bar [value]="progressValue"></ion-progress-bar>
   </div>
 </ion-content>

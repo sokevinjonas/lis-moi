@@ -13,4 +13,6 @@ export interface Books {
   url: string;
   price: number;
   categoryId: Category;
+  isFavorite?: boolean;
+  progress: number;
 }

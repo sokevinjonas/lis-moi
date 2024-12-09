@@ -78,14 +78,14 @@
             (click)="toggleFavorite(book)"
             class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg"
           >
-            <!-- <ion-icon
-            [name]="book.isFavorite ? 'star' : 'star-outline'"
-            [class]="book.isFavorite ? 'text-yellow-400' : 'text-gray-400'"
-            size="small"
-          >
-          </ion-icon> -->
-            <ion-icon name="star" class="text-yellow-400" size="small">
+            <ion-icon
+              [name]="book.isFavorite ? 'bookmark' : 'star-outline'"
+              [class]="book.isFavorite ? 'text-red-400' : 'text-gray-400'"
+              size="small"
+            >
             </ion-icon>
+            <!-- <ion-icon name="bookmark" class="text-red-400" size="small">
+            </ion-icon> -->
           </button>
         </div>
         <div class="p-4">
@@ -93,21 +93,20 @@
           <!-- <p class="text-gray-500 text-xs mb-2 line-clamp-2">
             {{ book.description }}
           </p> -->
-          <!-- <div *ngIf="book.progress !== undefined" class="mb-3">
-          <div class="w-full bg-gray-200 rounded-full h-1.5">
-            <div
-              class="bg-primary h-1.5 rounded-full"
-              [style.width]="book.progress + '%'"
-            ></div>
-          </div>
-          <span class="text-xs text-gray-500">{{ book.progress }}%</span>
-        </div> -->
-          <div class="mb-3">
+          <!-- Affichage de la progression si elle est définie -->
+          <div *ngIf="book.progress !== undefined" class="mb-3">
             <div class="w-full bg-gray-200 rounded-full h-1.5">
-              <div class="bg-primary h-1.5 rounded-full" width="10"></div>
+              <div
+                class="bg-primary h-1.5 rounded-full"
+                [ngStyle]="{
+                  'width': book.progress + '%',
+                  'background-color': globalService.getProgressColor(book.progress)
+                }"
+              ></div>
             </div>
-            <span class="text-xs text-gray-500">10%</span>
+            <span class="text-xs text-gray-500">{{ book.progress }}%</span>
           </div>
+
           <ion-button
             expand="block"
             size="small"
