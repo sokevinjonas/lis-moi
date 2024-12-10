@@ -73,7 +73,12 @@
           <ion-icon name="book-outline" slot="start"></ion-icon>
           Lire
         </ion-button>
-        <ion-button expand="block" color="light" class="flex-1">
+        <ion-button
+          expand="block"
+          color="light"
+          class="flex-1"
+          (click)="downloadBook()"
+        >
           <ion-icon name="download-outline" slot="start"></ion-icon>
           Télécharger
         </ion-button>

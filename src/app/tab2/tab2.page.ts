@@ -1,93 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Books } from '../core/interfaces/books';
+import { DownloadedBooksService } from '../core/services/downloaded/downloaded-books.service';
+import { GlobalService } from '../core/services/global/global.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
 })
-export class Tab2Page {
-  favoriteBooks: any[] = [
-    {
-      id: '1',
-      title: 'Le Petit Prince',
-      author: 'Antoine de Saint-Exupéry',
-      coverUrl: 'https://placehold.co/400',
-      description:
-        "Un prince venu d'une autre planète raconte ses aventures à un aviateur.",
-      progress: 75,
-      pageCount: 96,
-      category: 'Roman classique',
-      lastRead: '2024-03-15',
-      isFavorite: true,
-    },
-    {
-      id: '2',
-      title: "Harry Potter à l'école des sorciers",
-      author: 'J.K. Rowling',
-      coverUrl: 'https://placehold.co/400',
-      description:
-        'Un jeune sorcier découvre ses pouvoirs et un nouveau monde magique.',
-      progress: 100,
-      pageCount: 305,
-      category: 'Fantasy',
-      lastRead: '2024-02-28',
-      isFavorite: true,
-    },
-    {
-      id: '3',
-      title: 'Les Misérables',
-      author: 'Victor Hugo',
-      coverUrl: 'https://placehold.co/400',
-      description: "L'histoire de Jean Valjean dans le Paris du 19ème siècle.",
-      progress: 45,
-      pageCount: 1488,
-      category: 'Roman classique',
-      lastRead: '2024-03-10',
-      isFavorite: true,
-    },
-    {
-      id: '4',
-      title: 'Dune',
-      author: 'Frank Herbert',
-      coverUrl: 'https://placehold.co/400',
-      description:
-        'Une épopée de science-fiction sur la planète désertique Arrakis.',
-      progress: 60,
-      pageCount: 612,
-      category: 'Science-fiction',
-      lastRead: '2024-03-01',
-      isFavorite: true,
-    },
-    {
-      id: '5',
-      title: "L'Étranger",
-      author: 'Albert Camus',
-      coverUrl: 'https://placehold.co/400',
-      description:
-        "L'histoire de Meursault, un homme indifférent face à la société.",
-      progress: 90,
-      pageCount: 184,
-      category: 'Roman philosophique',
-      lastRead: '2024-03-12',
-      isFavorite: true,
-    },
-  ];
-  constructor() {}
-  async loadFavorites() {
-    // Dans un cas réel, on chargerait les données depuis le service
-    // this.favoriteBooks = await this.bookService.getFavoriteBooks();
+export class Tab2Page implements OnInit {
+  downloadedBooks: Books[] = [];
+  constructor(
+    private alertController: AlertController,
+    private toastController: ToastController,
+    protected downloadedBookService: DownloadedBooksService,
+    protected globalService: GlobalService
+  ) {}
+  ngOnInit() {
+    this.downloadedBookService
+      .loadDownloadedBooks()
+      .then((books) => {
+        this.downloadedBooks = books;
+      })
+      .catch((error) => {
+        console.error(
+          'Erreur lors du chargement des livres téléchargés:',
+          error
+        );
+      });
   }
 
-  getTotalPages() {
-    return this.favoriteBooks.reduce(
-      (total, book) => total + (book.pageCount * (book.progress || 0)) / 100,
-      0
-    );
-  }
+  async removeBook(book: Books & { filePath: string }) {
+    const alert = await this.alertController.create({
+      header: 'Confirmer la suppression',
+      message: 'Voulez-vous vraiment supprimer ce livre téléchargé ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+        },
+        {
+          text: 'Supprimer',
+          handler: async () => {
+            try {
+              await this.downloadedBookService.removeDownloadedBook(book);
+              const toast = await this.toastController.create({
+                message: 'Livre supprimé avec succès',
+                duration: 2000,
+                color: 'success',
+              });
+              await toast.present();
+            } catch (error) {
+              console.error('Erreur lors de la suppression:', error);
+              const toast = await this.toastController.create({
+                message: 'Erreur lors de la suppression du livre',
+                duration: 3000,
+                color: 'danger',
+              });
+              await toast.present();
+            }
+          },
+        },
+      ],
+    });
 
-  readBook(book: any) {}
-
-  removeFavorite(book: any) {
-    this.favoriteBooks = this.favoriteBooks.filter((b) => b.id !== book.id);
+    await alert.present();
   }
 }

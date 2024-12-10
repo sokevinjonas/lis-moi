@@ -10,7 +10,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class GlobalService {
   books: Books[] = [];
-  book: Books[] = [];
+  book!: Books;
   categories: Category[] = [];
   countFavoris: number = 0;
 
@@ -78,6 +78,28 @@ export class GlobalService {
       }
     });
   }
+
+  loadProgressForBook(bookId: number) {
+    const progressData = JSON.parse(
+      localStorage.getItem('readingProgress') || '{}'
+    );
+
+    // Recherche du livre dans la liste des livres
+    const book = this.books.find((b) => b.id === bookId);
+
+    if (book) {
+      // Vérifie si le livre a des données de progression enregistrées
+      const savedProgress = progressData[bookId];
+
+      // Si des données de progression existent, on les utilise, sinon on initialise à 0
+      book.progress = savedProgress ? savedProgress.progress : 0;
+
+      console.log('Progression du livre mise à jour', book);
+    } else {
+      console.error("Livre non trouvé pour l'ID:", bookId);
+    }
+  }
+
   async toggleFavorite(book: Books) {
     book.isFavorite = !book.isFavorite;
     console.log('toggleFavorite', book);

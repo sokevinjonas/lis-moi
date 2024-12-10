@@ -1,44 +1,38 @@
 <ion-header class="bg-white">
   <ion-toolbar>
-    <ion-title class="text-xl font-bold">Mes Favoris</ion-title>
+    <ion-title class="text-xl font-bold">Mes Téléchargements</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="p-4">
     <!-- Liste des favoris -->
-    <div *ngIf="favoriteBooks.length > 0" class="space-y-4">
+    <div *ngIf="downloadedBooks.length > 0" class="space-y-4">
       <div
-        *ngFor="let book of favoriteBooks"
+        *ngFor="let book of downloadedBooks"
         class="bg-white rounded-lg shadow-md overflow-hidden flex h-40"
       >
-        <img [src]="book.coverUrl" class="w-28 h-40 object-cover" />
+        <img [src]="book.coverImage" class="w-28 h-40 object-cover" />
         <div class="flex-1 p-4 flex flex-col justify-between">
           <div>
             <h3 class="font-semibold text-lg">{{ book.title }}</h3>
             <p class="text-sm text-gray-500">{{ book.author }}</p>
-            <div *ngIf="book.progress" class="mt-2">
-              <div class="w-full bg-gray-200 rounded-full h-1.5">
-                <div
-                  class="bg-primary h-1.5 rounded-full"
-                  [style.width]="book.progress + '%'"
-                ></div>
-              </div>
+            <div *ngIf="book.progress !== undefined" class="mt-2">
+              <div
+                class="bg-primary h-1.5 rounded-full"
+                [ngStyle]="{
+                  'width': book.progress + '%',
+                  'background-color': globalService.getProgressColor(book.progress)
+                }"
+              ></div>
               <span class="text-xs text-gray-500 mt-1"
                 >{{ book.progress }}% lu</span
               >
             </div>
           </div>
           <div class="flex justify-between items-center">
-            <ion-button size="small" fill="clear" (click)="readBook(book)">
-              Continuer
-            </ion-button>
-            <ion-button
-              size="small"
-              fill="clear"
-              color="danger"
-              (click)="removeFavorite(book)"
-            >
+            <ion-button size="small" fill="clear"> Continuer </ion-button>
+            <ion-button size="small" fill="clear" color="danger">
               <ion-icon name="heart" slot="icon-only"></ion-icon>
             </ion-button>
           </div>
@@ -47,7 +41,7 @@
     </div>
 
     <!-- État vide -->
-    <div *ngIf="favoriteBooks.length === 0" class="text-center py-12">
+    <div *ngIf="downloadedBooks.length === 0" class="text-center py-12">
       <ion-icon
         name="heart-outline"
         class="text-6xl text-gray-400 mb-4"
