@@ -50,7 +50,7 @@ export class ReaderPage implements OnInit, AfterViewInit {
     // Après que le composant PDF est chargé, on définit la page initiale
     setTimeout(() => {
       this.setInitialPage();
-    }, 1000); // Attendre que le PDF soit chargé avant de restaurer la page
+    }, 2000); // Attendre que le PDF soit chargé avant de restaurer la page
   }
 
   onPdfLoaded(event: any) {

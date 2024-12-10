@@ -1,11 +1,27 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Lis-moi</ion-title>
+    <div class="search-container">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        animated="true"
+        placeholder="Rechercher un livre..."
+        class="custom-searchbar"
+      />
+
+      <div class="simple-icons">
+        <div class="icon-with-badge">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          <span class="counter"> {{globalService.countFavoris}} </span>
+        </div>
+
+        <div class="icon-with-badge">
+          <ion-icon name="cart-outline"></ion-icon>
+          <span class="counter">4</span>
+        </div>
+      </div>
+    </div>
   </ion-toolbar>
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    placeholder="Rechercher un livre..."
-  ></ion-searchbar>
 </ion-header>
 
 <ion-content>
@@ -41,19 +57,47 @@
 
   <!-- Section des plus lus -->
   <section class="p-4">
-    <h2 class="text-lg font-semibold mb-4">Les plus lus ce mois-ci</h2>
+    <h2 class="text-lg font-semibold mb-4 truncate max-w-[80%]">
+      Les plus lus ce mois-ci
+    </h2>
     <swiper-container
-      [slidesPerView]="2"
+      [slidesPerView]="getSlidesPerView()"
       [spaceBetween]="10"
       autoplay-delay="2500"
+      [breakpoints]="{
+      '320': { slidesPerView: 2, spaceBetween: 10 },
+      '480': { slidesPerView: 3, spaceBetween: 15 },
+      '640': { slidesPerView: 4, spaceBetween: 20 }
+    }"
     >
-      <swiper-slide *ngFor="let book of globalService.books">
-        <div class="w-40 mx-2" [routerLink]="['/detail-item', book.id]">
-          <img
-            [src]="book.coverImage"
-            class="w-full h-56 object-cover rounded-lg shadow-md"
-          />
-          <p class="text-sm font-medium mt-2">{{ book.title }}</p>
+      <swiper-slide
+        *ngFor="let book of globalService.books"
+        class="most-read-book-slide"
+      >
+        <div
+          class="book-card w-full mx-2"
+          [routerLink]="['/detail-item', book.id]"
+        >
+          <div class="book-cover-container h-56 w-full">
+            <img
+              [src]="book.coverImage"
+              class="w-full h-full object-cover rounded-lg shadow-md"
+            />
+            <button
+              (click)="globalService.toggleFavorite(book); $event.stopPropagation()"
+              class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg z-10"
+            >
+              <ion-icon
+                [name]="book.isFavorite ? 'bookmark' : 'star-outline'"
+                [class]="book.isFavorite ? 'text-red-400' : 'text-gray-400'"
+                size="small"
+              >
+              </ion-icon>
+            </button>
+          </div>
+          <p class="text-sm font-medium mt-2 h-10 overflow-hidden">
+            {{ truncateTitle(book.title, 30) }}
+          </p>
         </div>
       </swiper-slide>
     </swiper-container>
@@ -62,7 +106,9 @@
   <!-- Section des livres par catégories -->
   <section class="p-4" *ngFor="let category of globalService.categories">
     <div class="flex justify-between items-center mb-4">
-      <h2 class="text-lg font-semibold">{{ category.name }}</h2>
+      <h2 class="text-lg font-semibold truncate max-w-[70%]">
+        {{ category.name }}
+      </h2>
       <button
         class="text-primary text-sm font-medium flex items-center space-x-1"
         (click)="showAllBooks(category.name)"
@@ -71,19 +117,28 @@
         <ion-icon name="arrow-forward-outline" class="ml-1"></ion-icon>
       </button>
     </div>
-    <swiper-container [slidesPerView]="2" [spaceBetween]="10">
-      <!-- <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> -->
+
+    <swiper-container
+      [slidesPerView]="getSlidesPerView()"
+      [spaceBetween]="10"
+      [breakpoints]="{
+        '320': { slidesPerView: 2, spaceBetween: 10 },
+        '480': { slidesPerView: 3, spaceBetween: 15 },
+        '640': { slidesPerView: 4, spaceBetween: 20 }
+      }"
+    >
       <swiper-slide
         *ngFor="let book of getBooksByCategory(category)"
-        class="bg-white rounded-lg shadow-md overflow-hidden"
-        ><div class="relative">
+        class="book-card flex flex-col h-full"
+      >
+        <div class="relative book-cover-container h-48 w-full">
           <img
             [routerLink]="['/detail-item', book.id]"
             [src]="book.coverImage"
-            class="w-full h-48 object-cover"
+            class="w-full h-full object-cover rounded-t-lg"
           />
           <button
-            (click)="toggleFavorite(book)"
+            (click)="globalService.toggleFavorite(book)"
             class="absolute top-2 right-2 p-2 bg-white rounded-full shadow-lg"
           >
             <ion-icon
@@ -92,16 +147,17 @@
               size="small"
             >
             </ion-icon>
-            <!-- <ion-icon name="bookmark" class="text-red-400" size="small">
-            </ion-icon> -->
           </button>
         </div>
-        <div class="p-4">
-          <h3 class="font-medium text-sm mb-1">{{ book.title }}</h3>
-          <!-- <p class="text-gray-500 text-xs mb-2 line-clamp-2">
-            {{ book.description }}
-          </p> -->
-          <!-- Affichage de la progression si elle est définie -->
+
+        <div
+          class="p-3 flex flex-col flex-grow bg-white rounded-b-lg shadow-md"
+        >
+          <h3 class="font-medium text-sm mb-2 h-10 overflow-hidden">
+            {{ truncateTitle(book.title, 30) }}
+          </h3>
+
+          <!-- Progression -->
           <div *ngIf="book.progress !== undefined" class="mb-3">
             <div class="w-full bg-gray-200 rounded-full h-1.5">
               <div
@@ -119,13 +175,12 @@
             expand="block"
             size="small"
             [routerLink]="['/reader', book.id]"
-            class="mt-2"
+            class="mt-auto"
           >
             Lire
           </ion-button>
         </div>
       </swiper-slide>
-      <!-- </div> -->
     </swiper-container>
   </section>
 </ion-content>

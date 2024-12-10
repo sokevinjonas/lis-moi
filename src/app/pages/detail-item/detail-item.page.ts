@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { Books } from 'src/app/core/interfaces/books';
 import { GlobalService } from 'src/app/core/services/global/global.service';
 
@@ -17,9 +18,9 @@ export class DetailItemPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.globalService.loadFromLocalStorage();
     // Récupérer l'ID du livre à partir de l'URL
     this.bookID = Number(this.route.snapshot.paramMap.get('bookID'));
-
     // Charger les détails du livre depuis le service
     this.globalService.loadItemBook(this.bookID).subscribe({
       next: (data) => {

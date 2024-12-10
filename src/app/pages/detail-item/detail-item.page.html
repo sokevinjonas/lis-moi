@@ -20,14 +20,11 @@
       <!-- En-tête avec titre et bouton favoris -->
       <div class="flex justify-between items-start mb-4">
         <h1 class="text-2xl font-bold text-gray-900">{{book.title}}</h1>
-        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-          <ion-icon name="heart" class="text-red-500" size="large"></ion-icon>
-        </button>
       </div>
 
       <!-- Auteur -->
       <div class="mb-6">
-        <h2 class="text-lg font-semibold text-gray-900">Paulo Coelho</h2>
+        <h2 class="text-lg font-semibold text-gray-900">{{book.author}}</h2>
         <p class="text-sm text-gray-500">{{ '12/12/2023' | date:'yyyy' }}</p>
       </div>
 

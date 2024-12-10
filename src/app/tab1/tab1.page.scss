@@ -1,0 +1,77 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  gap: 15px;
+}
+
+.custom-searchbar {
+  flex: 1;
+  background: #f8f9fa;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 16px;
+  outline: none;
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 0.8;
+  }
+}
+
+.simple-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.icon-with-badge {
+  position: relative;
+
+  ion-icon {
+    font-size: 24px;
+    color: #6c757d;
+  }
+
+  .counter {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    min-width: 18px;
+    text-align: center;
+  }
+}
+.book-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.book-cover-container {
+  position: relative;
+  width: 100%;
+  height: 12rem; /* Consistent height for book covers */
+}
+
+@media (max-width: 640px) {
+  .book-cover-container {
+    height: 10rem; /* Slightly smaller on mobile */
+  }
+}
+.most-read-book-slide {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

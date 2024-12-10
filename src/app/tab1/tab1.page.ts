@@ -1,15 +1,6 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Books } from '../core/interfaces/books';
 import { GlobalService } from '../core/services/global/global.service';
-import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -19,11 +10,8 @@ import { ToastController } from '@ionic/angular';
 export class Tab1Page implements OnInit {
   filteredBooks: Books[] = [];
   searchTerm: string = '';
-  constructor(
-    protected globalService: GlobalService,
-    private cdr: ChangeDetectorRef, // Injection de ChangeDetectorRef
-    private toastController: ToastController
-  ) {}
+
+  constructor(protected globalService: GlobalService) {}
 
   showAllBooks(category: string) {
     console.log(category);
@@ -41,6 +29,8 @@ export class Tab1Page implements OnInit {
   setInitialPage() {
     this.globalService.loadCategories();
     this.globalService.loadBooks();
+    this.globalService.NumberFavoris();
+    // this.countFavoris = JSON.parse(localStorage.getItem('favorites')) ?? [];
   }
 
   getBooksByCategory(category: any) {
@@ -49,24 +39,20 @@ export class Tab1Page implements OnInit {
     });
   }
 
-  async toggleFavorite(book: Books) {
-    book.isFavorite = !book.isFavorite;
-    const message = book.isFavorite
-      ? 'Ajouter dans mes favories'
-      : 'Retiré des favories';
-
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000,
-      position: 'bottom',
-    });
-    toast.present();
-    this.saveToLocalStorage();
+  // Method to get responsive slides per view
+  getSlidesPerView(): number {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 320) return 1;
+    if (screenWidth < 480) return 2;
+    if (screenWidth < 640) return 3;
+    return 4;
   }
-  saveToLocalStorage() {
-    const favorites = this.globalService.books.filter(
-      (book) => book.isFavorite
-    );
-    localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  // Method to truncate title
+  truncateTitle(title: string, maxLength: number = 60): string {
+    if (!title) return '';
+    return title.length > maxLength
+      ? title.substring(0, maxLength) + '...'
+      : title;
   }
 }

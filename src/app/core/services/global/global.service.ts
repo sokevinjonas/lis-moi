@@ -3,6 +3,7 @@ import { ApiService } from '../api/api.service';
 import { Books } from '../../interfaces/books';
 import { Category } from '../../interfaces/category';
 import { Observable, tap } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,12 @@ export class GlobalService {
   books: Books[] = [];
   book: Books[] = [];
   categories: Category[] = [];
-  constructor(private apiService: ApiService) {}
+  countFavoris: number = 0;
+
+  constructor(
+    private apiService: ApiService,
+    private toastController: ToastController
+  ) {}
 
   loadCategories() {
     this.apiService.getDataCategories().subscribe({
@@ -52,6 +58,12 @@ export class GlobalService {
       });
     }
   }
+  NumberFavoris() {
+    this.countFavoris = JSON.parse(
+      localStorage.getItem('favorites') ?? '[]'
+    ).length;
+    console.log(this.countFavoris);
+  }
   loadProgressForAllBooks() {
     const progressData = JSON.parse(
       localStorage.getItem('readingProgress') || '{}'
@@ -66,6 +78,28 @@ export class GlobalService {
       }
     });
   }
+  async toggleFavorite(book: Books) {
+    book.isFavorite = !book.isFavorite;
+    console.log('toggleFavorite', book);
+
+    const message = book.isFavorite
+      ? 'Ajouter dans mes favories'
+      : 'Retiré des favories';
+
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    toast.present();
+    this.saveToLocalStorage();
+    this.NumberFavoris();
+  }
+  saveToLocalStorage() {
+    const favorites = this.books.filter((book) => book.isFavorite);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+
   getProgressColor(progress: number): string {
     const red = Math.min(255, Math.floor((1 - progress / 100) * 255));
     const green = Math.min(255, Math.floor((progress / 100) * 165));

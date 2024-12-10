@@ -10,6 +10,7 @@ export interface Books {
   langage: string;
   nbrPage: number;
   bioAuthor: string;
+  author: string;
   url: string;
   price: number;
   categoryId: Category;
