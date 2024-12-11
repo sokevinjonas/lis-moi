@@ -20,6 +20,7 @@ export class Tab2Page implements OnInit {
   ngOnInit() {
     this.downloadedBookService.loadDownloadedBooks().then((books) => {
       this.downloadedBooks = books;
+      console.log(this.downloadedBooks);
     });
   }
 

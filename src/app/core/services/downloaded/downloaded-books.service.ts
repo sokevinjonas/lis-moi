@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Books } from '../../interfaces/books';
-import { GlobalService } from '../global/global.service';
 
 interface DownloadedBook extends Books {
   filePath: string; // Chemin du fichier local
@@ -26,6 +25,11 @@ export class DownloadedBooksService {
    */
   async loadDownloadedBooks(): Promise<DownloadedBook[]> {
     const books = await this.getBooksFromStorage();
+    console.log(
+      ' Charge les livres téléchargés depuis le stockage local.',
+      books
+    );
+
     this.downloadedBooks.next(books);
     return books; // Retourne les livres téléchargés
   }
