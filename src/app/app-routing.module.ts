@@ -19,6 +19,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/reader/reader.module').then((m) => m.ReaderPageModule),
   },
+  {
+    path: 'searchbar',
+    loadChildren: () =>
+      import('./pages/searchbar/searchbar.module').then(
+        (m) => m.SearchbarPageModule
+      ),
+  },
 ];
 @NgModule({
   imports: [

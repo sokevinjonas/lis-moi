@@ -18,20 +18,12 @@ export class Tab2Page implements OnInit {
     protected globalService: GlobalService
   ) {}
   ngOnInit() {
-    this.downloadedBookService
-      .loadDownloadedBooks()
-      .then((books) => {
-        this.downloadedBooks = books;
-      })
-      .catch((error) => {
-        console.error(
-          'Erreur lors du chargement des livres téléchargés:',
-          error
-        );
-      });
+    this.downloadedBookService.loadDownloadedBooks().then((books) => {
+      this.downloadedBooks = books;
+    });
   }
 
-  async removeBook(book: Books & { filePath: string }) {
+  async removeBook(book: Books) {
     const alert = await this.alertController.create({
       header: 'Confirmer la suppression',
       message: 'Voulez-vous vraiment supprimer ce livre téléchargé ?',

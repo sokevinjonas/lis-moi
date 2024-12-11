@@ -4,6 +4,8 @@
       <input
         type="text"
         [(ngModel)]="searchTerm"
+        [routerLink]="['/searchbar']"
+        routerLinkActive="router-link-active"
         animated="true"
         placeholder="Rechercher un livre..."
         class="custom-searchbar"
@@ -17,7 +19,7 @@
 
         <div class="icon-with-badge">
           <ion-icon name="cart-outline"></ion-icon>
-          <span class="counter">4</span>
+          <span class="counter">0</span>
         </div>
       </div>
     </div>

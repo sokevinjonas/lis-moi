@@ -30,12 +30,11 @@ export class Tab1Page implements OnInit {
     this.globalService.loadCategories();
     this.globalService.loadBooks();
     this.globalService.NumberFavoris();
-    // this.countFavoris = JSON.parse(localStorage.getItem('favorites')) ?? [];
   }
 
   getBooksByCategory(category: any) {
     return this.globalService.books.filter((book) => {
-      return book.categoryId === category.id;
+      return book.category_id.id === category.id;
     });
   }
 

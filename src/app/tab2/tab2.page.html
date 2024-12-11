@@ -17,21 +17,33 @@
           <div>
             <h3 class="font-semibold text-lg">{{ book.title }}</h3>
             <p class="text-sm text-gray-500">{{ book.author }}</p>
-            <div *ngIf="book.progress !== undefined" class="mt-2">
+            <div class="mt-2">
               <div
                 class="bg-primary h-1.5 rounded-full"
                 [ngStyle]="{
-                  'width': book.progress + '%',
-                  'background-color': globalService.getProgressColor(book.progress)
+                  'width': 30 + '%',
+                  'background-color': globalService.getProgressColor(30)
                 }"
               ></div>
-              <span class="text-xs text-gray-500 mt-1"
-                >{{ book.progress }}% lu</span
-              >
+              <span class="text-xs text-gray-500 mt-1">30% lu</span>
             </div>
           </div>
           <div class="flex justify-between items-center">
-            <ion-button size="small" fill="clear"> Continuer </ion-button>
+            <ion-button
+              size="small"
+              fill="clear"
+              [routerLink]="['/reader', book.id]"
+            >
+              Continuer
+            </ion-button>
+            <ion-button
+              (click)="removeBook(book)"
+              size="small"
+              fill="clear"
+              color="danger"
+            >
+              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+            </ion-button>
             <ion-button size="small" fill="clear" color="danger">
               <ion-icon name="heart" slot="icon-only"></ion-icon>
             </ion-button>

@@ -13,6 +13,7 @@ export class GlobalService {
   book!: Books;
   categories: Category[] = [];
   countFavoris: number = 0;
+  public isDownloading = false;
 
   constructor(
     private apiService: ApiService,

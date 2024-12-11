@@ -1,0 +1,99 @@
+<!-- searchbar.page.html -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="px-4 py-2">
+    <ion-searchbar
+      #searchbar
+      [(ngModel)]="searchTerm"
+      show-cancel-button="focus"
+      (ionFocus)="onSearchFocus()"
+      (ionCancel)="comeBack()"
+      (ionInput)="performSearch()"
+      placeholder="Rechercher votre livre préféré"
+      class="custom-searchbar"
+      [class.focused]="showHistory"
+    ></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="bg-gray-100">
+  <!-- Search History Section -->
+  <div
+    *ngIf="showHistory && searchHistory.length > 0"
+    class="px-4 py-2 bg-white shadow-sm"
+  >
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="text-lg font-semibold text-gray-700">Recherches récentes</h3>
+      <ion-button
+        fill="clear"
+        color="medium"
+        size="small"
+        (click)="clearSearchHistory()"
+      >
+        Effacer
+      </ion-button>
+    </div>
+    <ion-list>
+      <ion-item
+        *ngFor="let historyItem of searchHistory"
+        button
+        detail="false"
+        (click)="useHistorySearch(historyItem)"
+      >
+        <ion-icon
+          name="time-outline"
+          slot="start"
+          class="text-gray-500"
+        ></ion-icon>
+        <ion-label>{{ historyItem }}</ion-label>
+        <ion-icon
+          name="arrow-forward"
+          slot="end"
+          class="text-gray-400"
+        ></ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Book Results Section -->
+  <div class="container mx-auto px-4 py-6">
+    <div
+      *ngIf="filteredBooks.length === 0"
+      class="text-center text-gray-500 mt-10"
+    >
+      Aucun livre trouvé
+    </div>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col
+          *ngFor="let book of filteredBooks"
+          size="6"
+          size-md="4"
+          size-lg="3"
+          class="mb-4"
+        >
+          <div
+            class="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 h-full"
+          >
+            <div
+              class="relative pt-[150%]"
+              [routerLink]="['/detail-item', book.id]"
+            >
+              <img
+                [src]="book.coverImage"
+                [alt]="book.title"
+                class="absolute top-0 left-0 w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-4">
+              <h2 class="text-xl font-bold text-gray-800 mb-2">
+                {{ book.title }}
+              </h2>
+              <p class="text-sm text-gray-600">{{ book.category_id.name }}</p>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

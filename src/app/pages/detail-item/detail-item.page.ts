@@ -39,11 +39,24 @@ export class DetailItemPage implements OnInit {
     });
   }
 
-  async downloadBook() {
+  async downloadBook(book: Books) {
+    if (this.globalService.isDownloading) {
+      const toast = await this.toastController.create({
+        message: 'Un téléchargement est déjà en cours, veuillez patienter.',
+        duration: 3000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    this.globalService.isDownloading = true;
+
     try {
-      if (!this.book || !this.book.url) {
+      // Vérifiez si le livre est valide
+      if (!book || !book.url) {
         const toast = await this.toastController.create({
-          message: 'Aucun fichier disponible au téléchargement',
+          message: 'Aucun fichier disponible au téléchargement.',
           duration: 3000,
           color: 'warning',
         });
@@ -51,9 +64,10 @@ export class DetailItemPage implements OnInit {
         return;
       }
 
-      if (this.downloadedBooksService.isBookDownloaded(this.book.id)) {
+      // Vérifiez si le livre est déjà téléchargé
+      if (this.downloadedBooksService.isBookDownloaded(book.id)) {
         const toast = await this.toastController.create({
-          message: 'Ce livre est déjà téléchargé.',
+          message: 'Ce livre a déjà été téléchargé.',
           duration: 3000,
           color: 'warning',
         });
@@ -61,32 +75,52 @@ export class DetailItemPage implements OnInit {
         return;
       }
 
-      const fileExtension = this.book.url.split('.').pop() || 'pdf';
-      const sanitizedFileName = this.book.title
+      console.log('Téléchargement depuis l’URL :', book.url);
+
+      const response = await this.http
+        .get(book.url, { responseType: 'blob' })
+        .toPromise()
+        .catch((error) => {
+          console.error('Erreur HTTP lors du téléchargement :', error);
+          throw new Error(
+            'Impossible de récupérer le fichier depuis le serveur.'
+          );
+        });
+
+      if (!response || !(response instanceof Blob)) {
+        throw new Error('Le fichier téléchargé est invalide ou introuvable.');
+      }
+
+      const fileExtension = book.url.split('.').pop() || 'pdf';
+      const sanitizedFileName = book.title
         .toLowerCase()
         .replace(/[^a-z0-9]/gi, '-')
         .replace(/-+/g, '-')
         .trim();
       const fileName = `${sanitizedFileName}_${Date.now()}.${fileExtension}`;
 
-      const response = await this.http
-        .get(this.book.url, { responseType: 'blob' })
-        .toPromise();
-
-      if (!response) {
-        throw new Error('Échec du téléchargement du fichier');
-      }
-
       const base64Data = await this.blobToBase64(response);
 
-      await Filesystem.mkdir({
-        path: 'Lis-moi',
-        directory: Directory.Documents,
-        recursive: true,
-      });
+      const directoryPath = 'Lis-moi';
+      try {
+        await Filesystem.stat({
+          path: directoryPath,
+          directory: Directory.Documents,
+        });
+        console.log(`Le répertoire ${directoryPath} existe déjà.`);
+      } catch {
+        console.log(
+          `Le répertoire ${directoryPath} n'existe pas, création en cours.`
+        );
+        await Filesystem.mkdir({
+          path: directoryPath,
+          directory: Directory.Documents,
+          recursive: true,
+        });
+      }
 
-      const writeOptions: WriteFileOptions = {
-        path: `Lis-moi/${fileName}`,
+      const writeOptions = {
+        path: `${directoryPath}/${fileName}`,
         directory: Directory.Documents,
         data: base64Data as string,
         recursive: true,
@@ -94,25 +128,25 @@ export class DetailItemPage implements OnInit {
 
       await Filesystem.writeFile(writeOptions);
 
-      this.downloadedBooksService.addDownloadedBook(
-        this.book,
-        writeOptions.path
-      );
-
+      // Enregistrez le livre comme téléchargé
+      this.downloadedBooksService.addDownloadedBook(book, writeOptions.path);
+      this.downloadedBooksService.loadDownloadedBooks();
       const toast = await this.toastController.create({
-        message: `Le livre a été téléchargé dans Lis-moi/${fileName}`,
+        message: `Le livre a été téléchargé dans ${directoryPath}/${fileName}`,
         duration: 3000,
         position: 'bottom',
       });
       await toast.present();
     } catch (error) {
-      console.error('Erreur de téléchargement', error);
+      console.error('Erreur de téléchargement :', error);
       const toast = await this.toastController.create({
-        message: 'Échec du téléchargement',
+        message: 'Échec du téléchargement.',
         duration: 3000,
         color: 'danger',
       });
       await toast.present();
+    } finally {
+      this.globalService.isDownloading = false;
     }
   }
 

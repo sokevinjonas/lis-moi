@@ -3,7 +3,6 @@ import { Category } from './category';
 export interface Books {
   id: number;
   title: string;
-  category: string;
   description: string;
   coverImage: string;
   hasDigitalVersion: boolean;
@@ -13,7 +12,7 @@ export interface Books {
   author: string;
   url: string;
   price: number;
-  categoryId: Category;
+  category_id: Category;
   isFavorite?: boolean;
   progress: number;
 }
