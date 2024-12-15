@@ -105,4 +105,10 @@ export class SearchbarPage implements OnInit {
     this.searchbar.value = '';
     localStorage.removeItem('search_history');
   }
+  truncateTitle(title: string, maxLength: number = 60): string {
+    if (!title) return '';
+    return title.length > maxLength
+      ? title.substring(0, maxLength) + '...'
+      : title;
+  }
 }
