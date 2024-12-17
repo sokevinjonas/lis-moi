@@ -27,15 +27,6 @@
                   </p>
                 </div>
 
-                <!-- Affichage des erreurs -->
-                <div class="alert alert-danger" style="display: none">
-                  <ul>
-                    <!-- Liste d'erreurs à insérer ici -->
-                    <li>Erreur exemple 1</li>
-                    <li>Erreur exemple 2</li>
-                  </ul>
-                </div>
-
                 <form
                   action=""
                   method="POST"
@@ -44,7 +35,6 @@
                 >
                   <!-- Champ Email -->
                   <div class="col-12">
-                    <label for="yourEmail" class="form-label">Email</label>
                     <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend"
                         >Email</span
@@ -97,7 +87,11 @@
 
                   <!-- Bouton de connexion -->
                   <div class="col-12">
-                    <button class="btn btn-primary w-100" type="submit">
+                    <button
+                      routerLink="/dashboard"
+                      class="btn btn-primary w-100"
+                      type="submit"
+                    >
                       Se connecter
                     </button>
                   </div>
