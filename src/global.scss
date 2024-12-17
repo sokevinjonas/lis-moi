@@ -23,6 +23,7 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
 /**
  * Ionic Dark Mode
  * -----------------------------------------------------
@@ -33,3 +34,14 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Bibliothèques externes en premier */
+// @import "./assets/admin/vendor/bootstrap-icons/bootstrap-icons.css";
+// @import "./assets/admin/vendor/boxicons/css/boxicons.min.css";
+// @import "./assets/admin/vendor/quill/quill.snow.css";
+// @import "./assets/admin/vendor/quill/quill.bubble.css";
+// @import "./assets/admin/vendor/remixicon/remixicon.css";
+// @import "./assets/admin/vendor/simple-datatables/style.css";
+@import "/node_modules/bootstrap/dist/css/bootstrap.min.css";
+/* Styles principaux */
+@import "./assets/admin/css/style.css";

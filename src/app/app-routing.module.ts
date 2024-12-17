@@ -26,6 +26,48 @@ const routes: Routes = [
         (m) => m.SearchbarPageModule
       ),
   },
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./admin/dashboard/dashboard.module').then(
+        (m) => m.DashboardPageModule
+      ),
+  },
+  {
+    path: 'books',
+    loadChildren: () =>
+      import('./admin/books/books.module').then((m) => m.BooksPageModule),
+  },
+  {
+    path: 'categories',
+    loadChildren: () =>
+      import('./admin/categories/categories.module').then(
+        (m) => m.CategoriesPageModule
+      ),
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./admin/users/users.module').then((m) => m.UsersPageModule),
+  },
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('./admin/orders/orders.module').then((m) => m.OrdersPageModule),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./admin/settings/settings.module').then(
+        (m) => m.SettingsPageModule
+      ),
+  },
+
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+  },
 ];
 @NgModule({
   imports: [
