@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Books } from '../../interfaces/books';
 import { Category } from '../../interfaces/category';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -13,12 +13,14 @@ export class GlobalService {
   book!: Books;
   categories: Category[] = [];
   countFavoris: number = 0;
+
   public isDownloading = false;
+
 
   constructor(
     private apiService: ApiService,
     private toastController: ToastController
-  ) {}
+  ) { }
 
   loadCategories() {
     this.apiService.getDataCategories().subscribe({
