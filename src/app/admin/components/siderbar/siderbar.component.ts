@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 export class SiderbarComponent implements OnInit {
   constructor(private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log();
+  }
   logout() {
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
       // Implémente la logique de déconnexion ici
