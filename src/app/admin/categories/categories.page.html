@@ -26,8 +26,8 @@
                   <ion-col size="6"><strong>Nom</strong></ion-col>
                   <ion-col size="6"><strong>Actions</strong></ion-col>
                 </ion-row>
-                <ion-row *ngFor="let item of [1,2,3,4,5,6,7,8]">
-                  <ion-col size="6">Catégorie {{item}} </ion-col>
+                <ion-row *ngFor="let item of globalService.categories">
+                  <ion-col size="6">Catégorie {{item.name}} </ion-col>
                   <ion-col size="6">
                     <ion-button fill="clear" shape="round">Modifier</ion-button>
                     <ion-button fill="solid" color="danger">
@@ -48,25 +48,29 @@
             </ion-card-header>
             <ion-card-content>
               <ion-grid fixed>
-                <ion-row>
-                  <!-- Champ pour le nom de la prestation -->
-                  <ion-col size="12">
-                    <ion-input
-                      type="text"
-                      label-placement="stacked"
-                      label="Libellle de la catégorie"
-                      placeholder="Entrez un nom"
-                      fill="outline"
-                    ></ion-input>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-button expand="block" shape="round">
-                      Ajouter
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
+                <form (submit)="storeCategorie()" #categoryForm="ngForm">
+                  <ion-row>
+                    <!-- Champ pour le nom de la prestation -->
+                    <ion-col size="12">
+                      <ion-input
+                        type="text"
+                        label-placement="stacked"
+                        label="Libellle de la catégorie"
+                        placeholder="Entrez un nom"
+                        [(ngModel)]="name"
+                        name="name"
+                        fill="outline"
+                      ></ion-input>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col size="12">
+                      <ion-button type="submit" expand="block" shape="round">
+                        Ajouter
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </form>
               </ion-grid>
             </ion-card-content>
           </ion-card>
