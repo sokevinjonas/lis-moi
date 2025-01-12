@@ -1,8 +1,10 @@
-# Lis-moi 📚
+# Librio  📚
 
-Bienvenue dans Lis-moi, une application mobile hybride conçue pour vous permettre de lire et d’organiser vos livres numériques facilement et avec style ! 🚀
+📚 Bienvenue dans Librio
 
-Construite avec Ionic et Angular, cette application vous offre une expérience fluide et agréable, avec un design moderne grâce à Tailwind CSS et PrimeNG. Et le meilleur dans tout ça ? C’est open source ! 💡
+Découvrez Librio, votre compagnon de lecture numérique ultime, conçu pour vous offrir une expérience moderne, organisée et intuitive ! 🚀
+
+Développée avec Ionic et Angular, Librio combine un design épuré grâce à Tailwind CSS et PrimeNG, tout en étant open source, pour que vous puissiez apprendre, contribuer et personnaliser selon vos besoins. 💡
 
 ## Fonctionnalités principales 🛠️
 
