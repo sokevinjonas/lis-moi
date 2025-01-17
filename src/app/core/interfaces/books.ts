@@ -4,7 +4,7 @@ export interface Books {
   id: number;
   title: string;
   description: string;
-  coverImage: string;
+  cover_image: string;
   hasDigitalVersion: boolean;
   langage: string;
   nbrPage: number;

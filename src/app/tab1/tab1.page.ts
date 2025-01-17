@@ -33,8 +33,9 @@ export class Tab1Page implements OnInit {
   }
 
   getBooksByCategory(category: any) {
+    // console.log(category);
     return this.globalService.books.filter((book) => {
-      return book.category_id.id === category.id;
+      return book.category_id === category.id;
     });
   }
 

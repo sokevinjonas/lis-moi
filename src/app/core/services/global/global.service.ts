@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { Books } from '../../interfaces/books';
 import { Category } from '../../interfaces/category';
-import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ToastController } from '@ionic/angular';
 
 @Injectable({
@@ -16,11 +16,10 @@ export class GlobalService {
 
   public isDownloading = false;
 
-
   constructor(
     private apiService: ApiService,
     private toastController: ToastController
-  ) { }
+  ) {}
 
   loadCategories() {
     this.apiService.getDataCategories().subscribe({
@@ -131,5 +130,13 @@ export class GlobalService {
     const blue = Math.min(255, Math.floor((progress / 100) * 255));
 
     return `rgb(${red}, ${green}, ${blue})`;
+  }
+
+  decodeFileApi(url: string) {
+    // Encode uniquement la partie dynamique de l'URL pour éviter les erreurs
+    const encodedUrl = encodeURIComponent(url);
+    const urlChemin = `http://127.0.0.1:8000/storage/${encodedUrl}`;
+    console.log(urlChemin);
+    return urlChemin;
   }
 }

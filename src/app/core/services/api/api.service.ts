@@ -19,10 +19,10 @@ export class ApiService {
     Endpoints poour index/show
   */
   getDataBooks(): Observable<any> {
-    return this.http.get<any>(`${this.api}books`);
+    return this.http.get<any>(`${this.api}livres`);
   }
   getItemBook(params: number): Observable<any> {
-    return this.http.get<any>(`${this.api}books/${params}`);
+    return this.http.get<any>(`${this.api}livres/${params}`);
   }
 
   getDataCategories(): Observable<any> {

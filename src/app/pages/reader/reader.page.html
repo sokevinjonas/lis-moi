@@ -24,7 +24,7 @@
   <ng-container *ngIf="book; else loading">
     <div class="pdf-container">
       <ngx-extended-pdf-viewer
-        [src]="book.url"
+        [src]="globalService.decodeFileApi(book.url)"
         [height]="'100vh'"
         [useBrowserLocale]="true"
         [showToolbar]="true"

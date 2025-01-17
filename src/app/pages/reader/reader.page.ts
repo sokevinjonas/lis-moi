@@ -34,7 +34,7 @@ export class ReaderPage implements OnInit, AfterViewInit {
     // Charger les détails du livre
     this.globalService.loadItemBook(this.bookID).subscribe({
       next: (data) => {
-        this.book = data.data[0];
+        this.book = data.data;
         console.log('Détail du livre reçu:', this.book);
 
         // Charger la progression du livre depuis localStorage

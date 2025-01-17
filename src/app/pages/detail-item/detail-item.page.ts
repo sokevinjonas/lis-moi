@@ -29,7 +29,7 @@ export class DetailItemPage implements OnInit {
     this.bookID = Number(this.route.snapshot.paramMap.get('bookID'));
     this.globalService.loadItemBook(this.bookID).subscribe({
       next: (data) => {
-        this.book = data.data[0];
+        this.book = data.data;
         console.log('Détail du livre reçu:', this.book);
         this.globalService.loadProgressForBook(this.book.id);
       },

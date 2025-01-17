@@ -9,7 +9,10 @@
 
 <ion-content *ngIf="book">
   <div class="relative h-72">
-    <img [src]="book.coverImage" class="w-full h-72 object-cover" />
+    <img
+      [src]=" globalService.decodeFileApi(book.cover_image)"
+      class="w-full h-72 object-cover"
+    />
     <div
       class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"
     ></div>

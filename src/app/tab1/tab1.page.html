@@ -82,7 +82,7 @@
         >
           <div class="book-cover-container h-56 w-full">
             <img
-              [src]="book.coverImage"
+              [src]="globalService.decodeFileApi(book.cover_image)"
               class="w-full h-full object-cover rounded-lg shadow-md"
             />
             <button
@@ -136,7 +136,7 @@
         <div class="relative book-cover-container h-48 w-full">
           <img
             [routerLink]="['/detail-item', book.id]"
-            [src]="book.coverImage"
+            [src]="globalService.decodeFileApi(book.cover_image)"
             class="w-full h-full object-cover rounded-t-lg"
           />
           <button
