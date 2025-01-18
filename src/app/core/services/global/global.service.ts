@@ -132,11 +132,9 @@ export class GlobalService {
     return `rgb(${red}, ${green}, ${blue})`;
   }
 
-  decodeFileApi(url: string) {
-    // Encode uniquement la partie dynamique de l'URL pour éviter les erreurs
-    const encodedUrl = encodeURIComponent(url);
-    const urlChemin = `http://127.0.0.1:8000/storage/${encodedUrl}`;
-    console.log(urlChemin);
-    return urlChemin;
+  decodeFileApi(url: string): string {
+    const apiBaseUrl = `http://127.0.0.1:8000/api/v1/files/${url}`;
+    // console.log(encodeURIComponent(url));
+    return apiBaseUrl;
   }
 }

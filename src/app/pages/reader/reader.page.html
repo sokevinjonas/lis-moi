@@ -23,6 +23,7 @@
 <ion-content>
   <ng-container *ngIf="book; else loading">
     <div class="pdf-container">
+      <!-- [src]="globalService.decodeFileApi(book.url)" -->
       <ngx-extended-pdf-viewer
         [src]="globalService.decodeFileApi(book.url)"
         [height]="'100vh'"
